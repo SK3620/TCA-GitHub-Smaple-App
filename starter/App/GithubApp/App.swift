@@ -1,11 +1,12 @@
 import SwiftUI
-import AppFeature
+import SearchRepositoriesFeature
 
 @main
 struct GithubApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SearchRepositoriesView(store: .init(initialState: .init()) {
+                SearchRepositoriesReducer()
         }
     }
 }
