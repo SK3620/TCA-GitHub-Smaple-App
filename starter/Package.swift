@@ -32,7 +32,8 @@ let package = Package(
         // 外部パッケージの依存関係
         .package(url: "https://github.com/pointfreeco/swift-composable-architecture", from: "1.5.0"), // 状態管理のためのコンポーザブルアーキテクチャ
         .package(url: "https://github.com/pointfreeco/swift-dependencies", from: "1.1.2"), // 依存関係管理
-        .package(url: "https://github.com/ishkawa/APIKit", from: "5.4.0") // API呼び出しのためのネットワーキングライブラリ
+        .package(url: "https://github.com/ishkawa/APIKit", from: "5.4.0"), // API呼び出しのためのネットワーキングライブラリ
+        .package(url: "https://github.com/SimplyDanny/SwiftLintPlugins", from: "0.58.0")
     ],
     targets: [
         // パッケージのターゲットを定義します
@@ -46,6 +47,9 @@ let package = Package(
                     "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
                     // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
                 ])
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -62,6 +66,9 @@ let package = Package(
                     "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
                     // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
                 ])
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .testTarget(
@@ -84,6 +91,9 @@ let package = Package(
                     "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
                     // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
                 ])
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -98,6 +108,9 @@ let package = Package(
                     "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
                     // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
                 ])
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -113,6 +126,9 @@ let package = Package(
                     "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
                     // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
                 ])
+            ],
+            plugins: [
+                .plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")
             ]
         ),
         .target(
@@ -130,7 +146,8 @@ let package = Package(
                     "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
                     // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
                 ])
-            ]
+            ],
+            plugins: [.plugin(name: "SwiftLintBuildToolPlugin", package: "SwiftLintPlugins")]
         )
     ]
 )
