@@ -21,7 +21,6 @@
 		62753F742AA8E672008CBC3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62753F762AA8E672008CBC3D /* GithubApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GithubApp.entitlements; sourceTree = "<group>"; };
 		62753F782AA8E672008CBC3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		835A6E7C2D959607006A0601 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 		839C23FA2D9588C4000FBBE9 /* SearchRepositoriesFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesFeatureTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,7 +40,6 @@
 		62753F642AA8E671008CBC3D = {
 			isa = PBXGroup;
 			children = (
-				835A6E7C2D959607006A0601 /* swiftlint.yml */,
 				62753F6F2AA8E671008CBC3D /* GithubApp */,
 				620ED3A12AA8E73100F80622 /* GithubApp */,
 				839C23FC2D9588C4000FBBE9 /* Tests */,
