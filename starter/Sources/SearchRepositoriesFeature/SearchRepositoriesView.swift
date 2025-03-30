@@ -6,15 +6,17 @@ import RepositoryDetailFeature
 public struct SearchRepositoriesView: View {
     // 状態とアクションを管理するStore
     let store: StoreOf<SearchRepositoriesReducer>
-    
+
     // ViewState は UI に必要なデータをまとめた構造体
     struct ViewState: Equatable {
+        var items: [RepositoryItem] = []
         @BindingViewState var query: String // 検索クエリのバインディング
         @BindingViewState var showFavoritesOnly: Bool // お気に入りのみを表示するかのバインディング
         let hasMorePage: Bool // さらにページがあるかどうか
         
         @MainActor
         init(store: BindingViewStore<SearchRepositoriesReducer.State>) {
+            self.items = store.filteredItems
             self._query = store.$query
             self._showFavoritesOnly = store.$showFavoritesOnly
             self.hasMorePage = store.hasMorePage
@@ -35,14 +37,12 @@ public struct SearchRepositoriesView: View {
                 }
                 
                 // フィルタされたリポジトリをリスト表示
-//                ForEach(viewStore.filteredItems) { item in
-//                    Text(item.name)
-//                        .onAppear {
-//                            // アイテムが表示されたときにイベントを送信
-//                            viewStore.send(.itemAppeared(id: item.id))
-//                        }
-//                }
-                
+                ForEach(viewStore.items) { item in
+                    Text(item.name)
+                        .onAppear {
+                            viewStore.send(.itemAppeared(id: item.id))
+                        }
+                }
                 // さらにデータがある場合はローディングインジケータを表示
                 if viewStore.hasMorePage {
                     ProgressView()

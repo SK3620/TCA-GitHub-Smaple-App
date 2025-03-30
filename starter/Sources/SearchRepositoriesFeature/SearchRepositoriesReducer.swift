@@ -18,11 +18,13 @@ public struct SearchRepositoriesReducer: Reducer {
         public init() {}
     }
     
+    public init() {}
+    
     public enum Action: BindableAction {
         case binding(BindingAction<State>) // バインディング変更時のアクション
         case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
     }
-    
+        
     public var body: some ReducerOf<Self> {
         BindingReducer() // BindingActionを受け取った時の、"@BindingState"を更新するためのReducer
         Reduce { state, action in
@@ -36,7 +38,7 @@ public struct SearchRepositoriesReducer: Reducer {
     }
 }
 
-public struct RepositoryItem: Identifiable {
+public struct RepositoryItem: Identifiable, Equatable {
     public let id: Int
     public let name: String
     public let liked: Bool
