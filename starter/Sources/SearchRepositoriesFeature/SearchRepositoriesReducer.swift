@@ -5,10 +5,11 @@ import Foundation
 @Reducer
 public struct SearchRepositoriesReducer: Reducer {
     // MARK: - State
-    public struct State {
+    @ObservableState
+    public struct State: Equatable {
         var items: [RepositoryItem] = []
-        @BindingState var query: String = ""
-        @BindingState var showFavoritesOnly = false
+        var query: String = ""
+        var showFavoritesOnly = false
         var hasMorePage = false
         
         var filteredItems: [RepositoryItem] {
