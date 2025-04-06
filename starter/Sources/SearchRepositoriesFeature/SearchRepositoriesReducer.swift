@@ -28,11 +28,11 @@ public struct SearchRepositoriesReducer: Reducer {
         
     public var body: some ReducerOf<Self> {
         BindingReducer() // BindingActionを受け取った時の、"@BindingState"を更新するためのReducer
-        Reduce { state, action in
+        Reduce { _, action in
             switch action {
             case .binding:
                 return .none // BindingReducer()で自動で処理されるので特に何もしなくてOK
-            case .itemAppeared(let id):
+            case .itemAppeared:
                 return .none // アイテムが表示されたときの処理（現在は未実装）
             }
         }

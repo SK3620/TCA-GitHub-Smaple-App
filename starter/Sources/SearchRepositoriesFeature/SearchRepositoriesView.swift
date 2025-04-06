@@ -7,6 +7,10 @@ public struct SearchRepositoriesView: View {
     // 検索機能の状態とアクションを管理するStore
     @Perception.Bindable var store: StoreOf<SearchRepositoriesReducer>
     
+    public init(store: StoreOf<SearchRepositoriesReducer>) {
+        self.store = store
+    }
+    
     public var body: some View {
         List {
             Toggle(isOn: $store.showFavoritesOnly) {
