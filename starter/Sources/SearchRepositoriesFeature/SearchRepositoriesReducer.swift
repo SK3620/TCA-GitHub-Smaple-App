@@ -21,9 +21,16 @@ public struct SearchRepositoriesReducer: Reducer {
             return self.items.filter { !showFavoritesOnly || $0.liked }
         }
         
-        var path = StackState<RepositoryDetailReducer.State>()
+        // 画面の状態を積み上げる
+        var path = StackState<Path.State>()
         
         public init() {}
+    }
+    
+    // どんな画面を積み上げるかを定義
+    @Reducer(state: .equatable)
+    public enum Path {
+        case repositoryDetail(RepositoryDetailReducer)
     }
     
     public init() {}
@@ -31,7 +38,8 @@ public struct SearchRepositoriesReducer: Reducer {
     public enum Action: BindableAction {
         case binding(BindingAction<State>) // バインディング変更時のアクション
         case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
-        case path(StackActionOf<RepositoryDetailReducer>)
+        case itemTapped // リストのアイテムの押下時のアクション
+        case path(StackActionOf<Path>) // 子画面からのイベントを受け取る窓口
     }
         
     public var body: some ReducerOf<Self> {
@@ -41,14 +49,16 @@ public struct SearchRepositoriesReducer: Reducer {
             case .binding:
                 return .none // BindingReducer()で自動で処理されるので特に何もしなくてOK
             case .itemAppeared:
-                return .none // アイテムが表示されたときの処理（現在は未実装）
+                return .none
+            case .itemTapped:
+                state.path.append(.repositoryDetail(RepositoryDetailReducer.State()))
+                return .none
             case .path:
                 return .none
             }
         }
-        .forEach(\.path, action: \.path) {
-            RepositoryDetailReducer()
-        }
+        // 各子画面の処理を親とつなげる
+        .forEach(\.path, action: \.path)
     }
 }
 
