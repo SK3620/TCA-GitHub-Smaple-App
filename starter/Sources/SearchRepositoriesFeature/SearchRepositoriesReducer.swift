@@ -2,6 +2,7 @@ import ComposableArchitecture
 import SwiftUI
 import Foundation
 import RepositoryDetailFeature
+import SharedModel
 
 @Reducer
 public struct SearchRepositoriesReducer: Reducer {
@@ -38,20 +39,25 @@ public struct SearchRepositoriesReducer: Reducer {
     public enum Action: BindableAction {
         case binding(BindingAction<State>) // バインディング変更時のアクション
         case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
-        case itemTapped // リストのアイテムの押下時のアクション
+        case itemTapped(item: RepositoryItem) // リストのアイテムの押下時のアクション
+        case search // 検索押下時
         case path(StackActionOf<Path>) // 子画面からのイベントを受け取る窓口
     }
         
     public var body: some ReducerOf<Self> {
-        BindingReducer() // BindingActionを受け取った時の、"@BindingState"を更新するためのReducer
+        BindingReducer()
         Reduce { state, action in
             switch action {
             case .binding:
                 return .none // BindingReducer()で自動で処理されるので特に何もしなくてOK
             case .itemAppeared:
                 return .none
-            case .itemTapped:
-                state.path.append(.repositoryDetail(RepositoryDetailReducer.State()))
+            case .itemTapped(let item):
+                let repositoryDetailReducerState = RepositoryDetailReducer.State(item: item)
+                state.path.append(.repositoryDetail(repositoryDetailReducerState))
+                return .none
+            case .search:
+                print(state.query)
                 return .none
             case .path:
                 return .none
@@ -60,10 +66,4 @@ public struct SearchRepositoriesReducer: Reducer {
         // 各子画面の処理を親とつなげる
         .forEach(\.path, action: \.path)
     }
-}
-
-public struct RepositoryItem: Identifiable, Equatable {
-    public let id: Int
-    public let name: String
-    public let liked: Bool
 }

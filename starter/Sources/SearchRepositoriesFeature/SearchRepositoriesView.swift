@@ -21,7 +21,7 @@ public struct SearchRepositoriesView: View {
                 ForEach(store.items) { item in
                     Text(item.name)
                         .onTapGesture {
-                            store.send(.itemTapped)
+                            store.send(.itemTapped(item: item))
                         }
                         .onAppear {
                             store.send(.itemAppeared(id: item.id))
@@ -34,13 +34,19 @@ public struct SearchRepositoriesView: View {
                 }
             }
             .navigationTitle("GitHubApp")
+            .searchable(
+                text: $store.query,
+                placement: .navigationBarDrawer(displayMode: .always),
+                prompt: Text("Search repositories")
+            )
+            .onSubmit(of: .search) {
+                store.send(.search)
+            }
         } destination: { store in
             switch store.case {
             case .repositoryDetail(let store):
                 RepositoryDetailFeature.RepositoryDetailView(store: store)
             }
         }
-        // 検索バーを追加し、検索クエリをバインディングする
-        .searchable(text: $store.query)
     }
 }

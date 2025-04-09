@@ -10,6 +10,6 @@ public struct RepositoryDetailView: View {
     }
     
     public var body: some View {
-        Text("Hello World")
+        Text(store.repository.name)
     }
 }
