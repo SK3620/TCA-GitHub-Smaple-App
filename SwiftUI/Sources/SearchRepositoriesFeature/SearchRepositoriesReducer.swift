@@ -5,7 +5,6 @@ import SharedModel
 import Foundation
 import RepositoryDetailFeature
 
-@Reducer
 public struct SearchRepositoriesReducer: Reducer, Sendable {
     // MARK: - State
     public struct State: Equatable, Sendable {
@@ -67,7 +66,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
 
                 return .run { [query = state.query, page = state.currentPage] send in
                     await send(.searchReposResponse(Result {
-                        try await githubClient.searchRepos(query: query, page: page)
+                        try await githubClient.searchRepos(query, page)
                     }))
                 }
                 .debounce(id: CancelId.searchRepos, for: 0.3, scheduler: mainQueue)
@@ -100,7 +99,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
 
                     return .run { [query = state.query, page = state.currentPage] send in
                         await send(.searchReposResponse(Result {
-                            try await githubClient.searchRepos(query: query, page: page)
+                            try await githubClient.searchRepos(query, page)
                         }))
                     }
                 } else {
