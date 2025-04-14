@@ -17,15 +17,12 @@ public struct SearchRepositoriesView: View {
                 Toggle(isOn: $store.showFavoritesOnly) {
                     Text("Favorites Only")
                 }
-                // リポジトリのリストを表示
-                ForEach(store.items) { item in
-                    Text(item.name)
-                        .onTapGesture {
-                            store.send(.itemTapped(item: item))
-                        }
-                        .onAppear {
-                            store.send(.itemAppeared(id: item.id))
-                        }
+                
+                ForEach(
+                    store.scope(state: \.items, action: \.items),
+                    id: \.state.id
+                ) { itemStore in
+                    RepositoryItemView(store: itemStore)
                 }
                 
                 if store.hasMorePage {

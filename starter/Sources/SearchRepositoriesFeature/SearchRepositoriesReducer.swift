@@ -10,17 +10,15 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
     // MARK: - State
     @ObservableState
     public struct State: Equatable { // ※Sendableに準拠するとエラー
-        var items: IdentifiedArrayOf<RepositoryItem> = [
-            RepositoryItem(id: 1, name: "Repo1", liked: true),
-            RepositoryItem(id: 2, name: "Repo2", liked: false),
-            RepositoryItem(id: 3, name: "Repo3", liked: true)
-        ]
+        var items = IdentifiedArrayOf<RepositoryItemReducer.State>()
         var query: String = ""
         var showFavoritesOnly = false
         var hasMorePage = false
                 
-        var filteredItems: [RepositoryItem] {
-            return self.items.filter { !showFavoritesOnly || $0.liked }
+        var filteredItems: IdentifiedArrayOf<RepositoryItemReducer.State> {
+            items.filter {
+                !showFavoritesOnly || $0.liked
+            }
         }
         
         var loadingState: LoadingState = .refreshing
@@ -47,6 +45,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
     
     public enum Action: BindableAction {
         case binding(BindingAction<State>) // バインディング変更時のアクション
+        case items(IdentifiedActionOf<RepositoryItemReducer>)
         case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
         case itemTapped(item: RepositoryItem) // リストのアイテムの押下時のアクション
         case search // 検索押下時
@@ -63,6 +62,8 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
             switch action {
             case .binding:
                 return .none // BindingReducer()で自動で処理されるので特に何もしなくてOK
+            case .items:
+                return .none
             case .itemAppeared:
                 return .none
             case .itemTapped(let item):
@@ -81,9 +82,8 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
             case .path:
                 return .none
             case .searchReposResponse(.success(let response)):
-                response.items.forEach {
-                    state.items.append(RepositoryItem(id: $0.id, name: $0.name, liked: false))
-                }
+                let newItems = IdentifiedArray(uniqueElements: response.items.map { RepositoryItemReducer.State(repository: Repository(from: $0)) })
+                state.items = newItems
                 return .none
             case .searchReposResponse(.failure):
                 return .none
