@@ -18,10 +18,9 @@ public struct SearchRepositoriesView: View {
                     Text("Favorites Only")
                 }
             
-                
                 ForEach(
                     // 親Storeが持っている子要素リストから、それぞれの子要素専用の小さなStoreを作り出す
-                    store.scope(state: \.items, action: \.items),
+                    store.scope(state: \.filteredItems, action: \.items),
                     id: \.state.id
                 ) { itemStore in
                     RepositoryItemView(store: itemStore)
