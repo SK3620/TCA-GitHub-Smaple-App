@@ -89,6 +89,10 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
                 return .none
             }
         }
+        // この処理がないと、RepositoryItemReducerが機能しない
+        .forEach(\.items, action: \.items) {
+            RepositoryItemReducer()
+        }
         // 各子画面の処理を親とつなげる
         .forEach(\.path, action: \.path)
     }
