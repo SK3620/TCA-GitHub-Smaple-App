@@ -89,7 +89,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
                 return .none
             }
         }
-        // この処理がないと、RepositoryItemReducerが機能しない
+        // それぞれの子に対応するロジック（Reducer）を割り当てる
         .forEach(\.items, action: \.items) {
             RepositoryItemReducer()
         }
