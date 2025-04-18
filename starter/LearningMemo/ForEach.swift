@@ -44,11 +44,6 @@ struct Child {
     }
   }
 }
-//ChildState: 子要素一人が持つデータ（名前、カウント数など）です。 @ObservableState をつけることで、データが変わったら SwiftUI が自動で画面を更新してくれるようになります。Identifiable は、ForEach が各要素を区別するために必要で、ここでは id というユニークな番号を使います。
-//ChildAction: 子要素ができること（ボタンが押された、など）の種類です。
-//Child Reducer: ChildAction が発生したときに、ChildState をどう変更するかを定義します。ここでは、ボタンが押されたらカウントを増減させています。
-//親要素の設計図 (Feature Reducer)
-
 
 import ComposableArchitecture
 import Foundation
