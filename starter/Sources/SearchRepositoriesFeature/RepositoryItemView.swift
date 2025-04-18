@@ -27,9 +27,7 @@ struct RepositoryItemView: View {
             Spacer(minLength: 16)
             
             Button {
-                // どちらでも可能 あとで違いを調べる
-                // $store.liked.wrappedValue.toggle()
-                $store.wrappedValue.liked.toggle()
+                 $store.liked.wrappedValue.toggle()
             } label: {
                 Image(systemName: store.liked ? "heart.fill" : "heart")
                     .resizable()
