@@ -8,12 +8,16 @@ public struct RepositoryDetailReducer: Reducer {
     // MARK: - State
     @ObservableState
     public struct State: Equatable {
-        public let repository: RepositoryItem
+        public var id: Int { repository.id }
+        public let repository: Repository
+        public var liked: Bool = false
 
         public init(
-            item: RepositoryItem
+            item: Repository,
+            liked: Bool = false
         ) {
             self.repository = item
+            self.liked = liked
         }
     }
 

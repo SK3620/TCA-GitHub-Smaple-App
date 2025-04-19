@@ -24,6 +24,9 @@ public struct SearchRepositoriesView: View {
                     id: \.state.id
                 ) { itemStore in
                     RepositoryItemView(store: itemStore)
+                        .onTapGesture {
+                            store.send(.itemTapped(item: itemStore.repository))
+                        }
                 }
                 
                 if store.hasMorePage {

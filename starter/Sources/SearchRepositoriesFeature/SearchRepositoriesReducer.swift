@@ -47,7 +47,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
         case binding(BindingAction<State>) // バインディング変更時のアクション
         case items(IdentifiedActionOf<RepositoryItemReducer>)
         case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
-        case itemTapped(item: RepositoryItem) // リストのアイテムの押下時のアクション
+        case itemTapped(item: Repository) // リストのアイテムの押下時のアクション
         case search // 検索押下時
         case searchReposResponse(Result<SearchReposResponse, Error>) // 受け取った検索結果を流す
         case path(StackActionOf<Path>) // 子画面からのイベントを受け取る窓口
