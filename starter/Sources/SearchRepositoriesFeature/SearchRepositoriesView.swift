@@ -28,11 +28,6 @@ public struct SearchRepositoriesView: View {
                             store.send(.itemTapped(item: itemStore.repository))
                         }
                 }
-                
-                if store.hasMorePage {
-                    ProgressView()
-                        .frame(maxWidth: .infinity)
-                }
             }
             .navigationTitle("GitHubApp")
             .searchable(

@@ -71,6 +71,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
                 state.path.append(.repositoryDetail(repositoryDetailReducerState))
                 return .none
             case .search:
+                state.loadingState = .refreshing
                 return .run { [query = state.query] send in
                     // init(catching body: () async throws(Failure) -> Success) async 「async」なのでawaitつける
                     let result = await Result(catching: { () async throws -> SearchReposResponse in
@@ -82,8 +83,17 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
             case .path:
                 return .none
             case .searchReposResponse(.success(let response)):
-                let newItems = IdentifiedArray(uniqueElements: response.items.map { RepositoryItemReducer.State(repository: Repository(from: $0)) })
-                state.items = newItems
+                switch state.loadingState {
+                case .loadingNext:
+                    print("loadingNext")
+                case .refreshing:
+                    let newItems = IdentifiedArray(uniqueElements: response.items.map { RepositoryItemReducer.State(repository: Repository(from: $0)) })
+                    state.items = newItems
+                case .none:
+                    break
+                }
+                
+                state.loadingState = .none
                 return .none
             case .searchReposResponse(.failure):
                 return .none
