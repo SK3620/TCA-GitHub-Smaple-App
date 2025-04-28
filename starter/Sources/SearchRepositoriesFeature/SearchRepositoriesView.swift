@@ -13,20 +13,29 @@ public struct SearchRepositoriesView: View {
     
     public var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
-            List {
-                Toggle(isOn: $store.showFavoritesOnly) {
-                    Text("Favorites Only")
-                }
-            
-                ForEach(
-                    // 親Storeが持っている子要素リストから、それぞれの子要素専用の小さなStoreを作り出す
-                    store.scope(state: \.filteredItems, action: \.items),
-                    id: \.state.id
-                ) { itemStore in
-                    RepositoryItemView(store: itemStore)
-                        .onTapGesture {
-                            store.send(.itemTapped(item: itemStore.repository, liked: itemStore.liked))
+            VStack {
+                switch store.loadingState {
+                case .loading:
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .padding()
+                case .idle:
+                    List {
+                        Toggle(isOn: $store.showFavoritesOnly) {
+                            Text("Favorites Only")
                         }
+                        
+                        ForEach(
+                            // 親Storeが持っている子要素リストから、それぞれの子要素専用の小さなStoreを作り出す
+                            store.scope(state: \.filteredItems, action: \.items),
+                            id: \.state.id
+                        ) { itemStore in
+                            RepositoryItemView(store: itemStore)
+                                .onTapGesture {
+                                    store.send(.itemTapped(item: itemStore.repository, liked: itemStore.liked))
+                                }
+                        }
+                    }
                 }
             }
             .navigationTitle("GitHubApp")
