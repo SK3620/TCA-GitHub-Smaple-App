@@ -47,7 +47,7 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
         case binding(BindingAction<State>) // バインディング変更時のアクション
         case items(IdentifiedActionOf<RepositoryItemReducer>)
         case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
-        case itemTapped(item: Repository) // リストのアイテムの押下時のアクション
+        case itemTapped(item: Repository, liked: Bool) // リストのアイテムの押下時のアクション
         case search // 検索押下時
         case searchReposResponse(Result<SearchReposResponse, Error>) // 受け取った検索結果を流す
         case path(StackActionOf<Path>) // 子画面からのイベントを受け取る窓口
@@ -66,8 +66,8 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
                 return .none
             case .itemAppeared:
                 return .none
-            case .itemTapped(let item):
-                let repositoryDetailReducerState = RepositoryDetailReducer.State(item: item)
+            case let .itemTapped(item, liked):
+                let repositoryDetailReducerState = RepositoryDetailReducer.State(item: item, liked: liked)
                 state.path.append(.repositoryDetail(repositoryDetailReducerState))
                 return .none
             case .search:
@@ -80,6 +80,16 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
                     // let result: Result<SearchReposResponse, any Error>
                     await send(.searchReposResponse(result))
                 }
+            case let .path(.element(id: id, action: .repositoryDetail(.binding(_)))):
+                // case let .path(.element(id: id, action: .binding(\.$liked))): コンパイルエラー
+                /*
+                public enum StackAction<State, Action>: CasePathable {
+                    indirect case element(id: StackElementID, action: Action)
+                }
+                 */
+                guard let repositoryDetail = state.path[id: id]?.repositoryDetail else { return .none }
+                state.items[id: repositoryDetail.id]?.liked = repositoryDetail.liked
+                return .none
             case .path:
                 return .none
             case .searchReposResponse(.success(let response)):

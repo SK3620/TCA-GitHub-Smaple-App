@@ -25,7 +25,7 @@ public struct SearchRepositoriesView: View {
                 ) { itemStore in
                     RepositoryItemView(store: itemStore)
                         .onTapGesture {
-                            store.send(.itemTapped(item: itemStore.repository))
+                            store.send(.itemTapped(item: itemStore.repository, liked: itemStore.liked))
                         }
                 }
             }
