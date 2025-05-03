@@ -77,6 +77,7 @@ public struct NetworkClientDependency: Sendable {
 }
 
 // `DependencyValues`に登録
+// networkClientという名前で登録して、NetworkClientを依存関係として使えるようにする
 public extension DependencyValues {
     var networkClient: NetworkClientDependency {
         get { self[NetworkClientDependency.self] }
