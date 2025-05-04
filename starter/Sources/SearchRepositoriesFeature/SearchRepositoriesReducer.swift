@@ -50,6 +50,11 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
         case search // 検索押下時
         case searchReposResponse(Result<SearchReposResponse, Error>) // 受け取った検索結果を流す
         case path(StackActionOf<Path>) // 子画面からのイベントを受け取る窓口
+        case delegate(Delegate)
+       
+        public enum Delegate: Equatable {
+            case someDelegateAction
+        }
     }
     
     // MARK: - Dependencies
@@ -97,6 +102,8 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
                 state.loadingState = .idle
                 return .none
             case .searchReposResponse(.failure):
+                return .none
+            case .delegate:
                 return .none
             }
         }
