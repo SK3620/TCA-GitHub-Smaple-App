@@ -21,9 +21,13 @@ let package = Package(
         // それぞれのファイルで、import SharedModel, import ApiClientなどを定義して使用できる
         // productに定義されていないものは使えない
 
-        .library(name: "SharedModel", targets: ["SharedModel"]), // 共有モデルライブラリ
-        .library(name: "SearchRepositoriesFeature", targets: ["SearchRepositoriesFeature"]), // リポジトリ検索機能
-        .library(name: "RepositoryDetailFeature", targets: ["RepositoryDetailFeature"]), // リポジトリ詳細表示機能
+        .library(name: "SharedModel", targets: ["SharedModel"]),
+        .library(name: "RootFeature", targets: ["RootFeature"]),
+        .library(name: "TabBarFeature", targets: ["TabBarFeature"]),
+        .library(name: "HomeFeature", targets: ["HomeFeature"]),
+        .library(name: "SearchRepositoriesFeature", targets: ["SearchRepositoriesFeature"]),
+        .library(name: "RepositoryDetailFeature", targets: ["RepositoryDetailFeature"]),
+        .library(name: "ProfileFeature", targets: ["ProfileFeature"]),
         .library(name: "ApiClient", targets: ["ApiClient"]), // APIクライアントライブラリ
         .library(name: "GithubClient", targets: ["GithubClient"]), // GitHub APIと対話するためのクライアント
         .library(name: "GithubClientLive", targets: ["GithubClientLive"]) // Githubクライアントのライブ実装
@@ -35,100 +39,133 @@ let package = Package(
         .package(url: "https://github.com/ishkawa/APIKit", from: "5.4.0") // API呼び出しのためのネットワーキングライブラリ
     ],
     targets: [
-        // パッケージのターゲットを定義します
         .target(
-            name: "SharedModel", // 共有モデルのターゲット
-            dependencies: [
-                // このターゲットには依存関係はありません
-            ],
+            name: "SharedModel",
+            dependencies: [],
             swiftSettings: [
                 .unsafeFlags([
-                    "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
-                    // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
+                    "-strict-concurrency=complete"
                 ])
             ]
         ),
         .target(
-            name: "SearchRepositoriesFeature", // リポジトリ検索機能のターゲット
+            name: "RootFeature",
             dependencies: [
-                "SharedModel", // 共有モデルに依存
-                "GithubClient", // Githubクライアントに依存
-                "RepositoryDetailFeature", // リポジトリ詳細機能に依存
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture") // コンポーザブルアーキテクチャTCAにも依存
-                // これにより、状態管理やアプリケーションの構造を簡潔に保つことができます。
+                "HomeFeature",
+                "SearchRepositoriesFeature",
+                "ProfileFeature",
+                "TabBarFeature",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
-                    // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
+                    "-strict-concurrency=complete"
+                ])
+            ]
+        ),
+        .target(
+            name: "TabBarFeature",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ],
+            swiftSettings: [
+                .unsafeFlags([
+                    "-strict-concurrency=complete"
+                ])
+            ]
+        ),
+        .target(
+            name: "HomeFeature",
+            dependencies: [
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ],
+            swiftSettings: [
+                .unsafeFlags([
+                    "-strict-concurrency=complete"
+                ])
+            ]
+        ),
+        .target(
+            name: "SearchRepositoriesFeature",
+            dependencies: [
+                "SharedModel",
+                "GithubClient",
+                "RepositoryDetailFeature",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
+            ],
+            swiftSettings: [
+                .unsafeFlags([
+                    "-strict-concurrency=complete"
                 ])
             ]
         ),
         .testTarget(
-            name: "SearchRepositoriesFeatureTests", // リポジトリ検索機能のテストターゲット
+            name: "SearchRepositoriesFeatureTests",
             dependencies: [
-                "SearchRepositoriesFeature", // リポジトリ検索機能に依存
-                "RepositoryDetailFeature" // リポジトリ詳細機能にも依存
-                // テストを行うために、実際の機能に依存する必要があります。
+                "SearchRepositoriesFeature",
+                "RepositoryDetailFeature"
             ]
         ),
         .target(
-            name: "RepositoryDetailFeature", // リポジトリ詳細機能のターゲット
+            name: "RepositoryDetailFeature",
             dependencies: [
-                "SharedModel", // 共有モデルに依存
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture") // コンポーザブルアーキテクチャを使用
-                // 状態管理を行うために必要です。
+                "SharedModel",
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
-                    // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
+                    "-strict-concurrency=complete"
                 ])
             ]
         ),
         .target(
-            name: "ApiClient", // APIクライアントのターゲット
+            name: "ProfileFeature",
             dependencies: [
-                "SharedModel", // 共有モデルに依存
-                .product(name: "APIKit", package: "APIKit") // ネットワーキングのためにAPIKitを使用
-                // API呼び出しを行うためのライブラリです。
+                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
-                    // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
+                    "-strict-concurrency=complete"
                 ])
             ]
         ),
         .target(
-            name: "GithubClient", // Githubクライアントのターゲット
+            name: "ApiClient",
             dependencies: [
-                "SharedModel", // 共有モデルに依存
-                .product(name: "Dependencies", package: "swift-dependencies"), // 依存関係管理を使用
-                .product(name: "DependenciesMacros", package: "swift-dependencies") // 依存関係マクロを使用
-                // これにより、依存関係の管理が簡単になります。
+                "SharedModel",
+                .product(name: "APIKit", package: "APIKit")
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
-                    // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
+                    "-strict-concurrency=complete"
                 ])
             ]
         ),
         .target(
-            name: "GithubClientLive", // Githubクライアントのライブ実装
+            name: "GithubClient",
             dependencies: [
-                "SharedModel", // 共有モデルに依存
-                "ApiClient", // APIクライアントに依存
-                "GithubClient", // Githubクライアントに依存
-                .product(name: "Dependencies", package: "swift-dependencies"), // 依存関係管理を使用
-                .product(name: "APIKit", package: "APIKit") // ネットワーキングのためにAPIKitを使用
-                // ライブ環境でのAPI呼び出しを行うために必要です。
+                "SharedModel",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "DependenciesMacros", package: "swift-dependencies")
             ],
             swiftSettings: [
                 .unsafeFlags([
-                    "-strict-concurrency=complete" // 厳格な並行性チェックを有効にします
-                    // このオプションにより、すべての非同期コードが厳格にチェックされ、潜在的な競合状態を防ぎます。
+                    "-strict-concurrency=complete"
+                ])
+            ]
+        ),
+        .target(
+            name: "GithubClientLive",
+            dependencies: [
+                "SharedModel",
+                "ApiClient",
+                "GithubClient",
+                .product(name: "Dependencies", package: "swift-dependencies"),
+                .product(name: "APIKit", package: "APIKit")
+            ],
+            swiftSettings: [
+                .unsafeFlags([
+                    "-strict-concurrency=complete"
                 ])
             ]
         )
