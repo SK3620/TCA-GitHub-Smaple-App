@@ -19,7 +19,7 @@
 //
 //つまりこういう状態：
 
-struct OrderFeature {
+struct OrderManageFeature {
     struct State {
         var orders: IdentifiedArrayOf<Order.State>
     }
