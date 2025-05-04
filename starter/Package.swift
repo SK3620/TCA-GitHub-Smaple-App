@@ -22,12 +22,8 @@ let package = Package(
         // productに定義されていないものは使えない
 
         .library(name: "SharedModel", targets: ["SharedModel"]),
-        .library(name: "RootFeature", targets: ["RootFeature"]),
-        .library(name: "TabBarFeature", targets: ["TabBarFeature"]),
-        .library(name: "HomeFeature", targets: ["HomeFeature"]),
         .library(name: "SearchRepositoriesFeature", targets: ["SearchRepositoriesFeature"]),
         .library(name: "RepositoryDetailFeature", targets: ["RepositoryDetailFeature"]),
-        .library(name: "ProfileFeature", targets: ["ProfileFeature"]),
         .library(name: "ApiClient", targets: ["ApiClient"]), // APIクライアントライブラリ
         .library(name: "GithubClient", targets: ["GithubClient"]), // GitHub APIと対話するためのクライアント
         .library(name: "GithubClientLive", targets: ["GithubClientLive"]) // Githubクライアントのライブ実装
@@ -42,43 +38,6 @@ let package = Package(
         .target(
             name: "SharedModel",
             dependencies: [],
-            swiftSettings: [
-                .unsafeFlags([
-                    "-strict-concurrency=complete"
-                ])
-            ]
-        ),
-        .target(
-            name: "RootFeature",
-            dependencies: [
-                "HomeFeature",
-                "SearchRepositoriesFeature",
-                "ProfileFeature",
-                "TabBarFeature",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
-            ],
-            swiftSettings: [
-                .unsafeFlags([
-                    "-strict-concurrency=complete"
-                ])
-            ]
-        ),
-        .target(
-            name: "TabBarFeature",
-            dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
-            ],
-            swiftSettings: [
-                .unsafeFlags([
-                    "-strict-concurrency=complete"
-                ])
-            ]
-        ),
-        .target(
-            name: "HomeFeature",
-            dependencies: [
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
-            ],
             swiftSettings: [
                 .unsafeFlags([
                     "-strict-concurrency=complete"
@@ -110,17 +69,6 @@ let package = Package(
             name: "RepositoryDetailFeature",
             dependencies: [
                 "SharedModel",
-                .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
-            ],
-            swiftSettings: [
-                .unsafeFlags([
-                    "-strict-concurrency=complete"
-                ])
-            ]
-        ),
-        .target(
-            name: "ProfileFeature",
-            dependencies: [
                 .product(name: "ComposableArchitecture", package: "swift-composable-architecture")
             ],
             swiftSettings: [

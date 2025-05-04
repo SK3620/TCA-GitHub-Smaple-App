@@ -18,6 +18,7 @@ public struct ProfileReducer: Reducer, Sendable {
     public init() {}
     
     public enum Action: BindableAction {
+        case binding(BindingAction<State>)
         case delegate(Delegate)
        
         public enum Delegate: Equatable {
@@ -26,8 +27,11 @@ public struct ProfileReducer: Reducer, Sendable {
     }
     
     public var body: some ReducerOf<Self> {
+        BindingReducer()
         Reduce { state, action in
             switch action {
+            case .binding:
+                return .none
             case .delegate:
                 return .none
             }

@@ -9,9 +9,9 @@ import SwiftUI
 import ComposableArchitecture
 
 public struct CustomTabBar: View {
-    let store: StoreOf<TabBarFeature>
+    let store: StoreOf<TabBarReducer>
     
-    public init(store: StoreOf<TabBarFeature>) {
+    public init(store: StoreOf<TabBarReducer>) {
         self.store = store
     }
     
@@ -21,6 +21,8 @@ public struct CustomTabBar: View {
                 store.send(.didSelectTab(.home))
             } label: {
                 Image(systemName: store.selectedTab == .home ? "house.fill" : "house")
+                    .font(.system(size: 24))
+                    .foregroundColor(store.selectedTab == .home ? .blue : .gray)
             }
             
             Spacer()
@@ -29,6 +31,8 @@ public struct CustomTabBar: View {
                 store.send(.didSelectTab(.search))
             } label: {
                 Image(systemName: store.selectedTab == .search ? "magnifyingglass.circle.fill" : "magnifyingglass.circle")
+                    .font(.system(size: 24))
+                    .foregroundColor(store.selectedTab == .search ? .blue : .gray)
             }
             
             Spacer()
@@ -37,8 +41,9 @@ public struct CustomTabBar: View {
                 store.send(.didSelectTab(.profile))
             } label: {
                 Image(systemName: store.selectedTab == .profile ? "person.crop.circle.fill" : "person.crop.circle")
+                    .font(.system(size: 24))
+                    .foregroundColor(store.selectedTab == .profile ? .blue : .gray)
             }
         }
-        .padding()
     }
 }

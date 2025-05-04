@@ -12,6 +12,14 @@
 		835A6E762D958F1E006A0601 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62753F702AA8E671008CBC3D /* App.swift */; };
 		835A6E782D958F2F006A0601 /* GithubClientLive in Frameworks */ = {isa = PBXBuildFile; productRef = 835A6E772D958F2F006A0601 /* GithubClientLive */; };
 		835A6E7A2D958F3B006A0601 /* SearchRepositoriesFeature in Frameworks */ = {isa = PBXBuildFile; productRef = 835A6E792D958F3B006A0601 /* SearchRepositoriesFeature */; };
+		837038BB2DC76031008B73E2 /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B82DC76031008B73E2 /* CustomTabBar.swift */; };
+		837038BC2DC76031008B73E2 /* RootReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B52DC76031008B73E2 /* RootReducer.swift */; };
+		837038BD2DC76031008B73E2 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B62DC76031008B73E2 /* RootView.swift */; };
+		837038BE2DC76031008B73E2 /* ProfileReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B22DC76031008B73E2 /* ProfileReducer.swift */; };
+		837038BF2DC76031008B73E2 /* TabBarReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B92DC76031008B73E2 /* TabBarReducer.swift */; };
+		837038C02DC76031008B73E2 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B02DC76031008B73E2 /* HomeView.swift */; };
+		837038C12DC76031008B73E2 /* HomeReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038AF2DC76031008B73E2 /* HomeReducer.swift */; };
+		837038C22DC76031008B73E2 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 837038B32DC76031008B73E2 /* ProfileView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -21,6 +29,14 @@
 		62753F742AA8E672008CBC3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		62753F762AA8E672008CBC3D /* GithubApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GithubApp.entitlements; sourceTree = "<group>"; };
 		62753F782AA8E672008CBC3D /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		837038AF2DC76031008B73E2 /* HomeReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReducer.swift; sourceTree = "<group>"; };
+		837038B02DC76031008B73E2 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		837038B22DC76031008B73E2 /* ProfileReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileReducer.swift; sourceTree = "<group>"; };
+		837038B32DC76031008B73E2 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		837038B52DC76031008B73E2 /* RootReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootReducer.swift; sourceTree = "<group>"; };
+		837038B62DC76031008B73E2 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		837038B82DC76031008B73E2 /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
+		837038B92DC76031008B73E2 /* TabBarReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarReducer.swift; sourceTree = "<group>"; };
 		839C23FA2D9588C4000FBBE9 /* SearchRepositoriesFeatureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesFeatureTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,6 +76,10 @@
 			isa = PBXGroup;
 			children = (
 				62753F702AA8E671008CBC3D /* App.swift */,
+				837038B12DC76031008B73E2 /* HomeFeature */,
+				837038B42DC76031008B73E2 /* ProfileFeature */,
+				837038B72DC76031008B73E2 /* RootFeature */,
+				837038BA2DC76031008B73E2 /* TabBarFeature */,
 				62753F742AA8E672008CBC3D /* Assets.xcassets */,
 				62753F762AA8E672008CBC3D /* GithubApp.entitlements */,
 				62753F772AA8E672008CBC3D /* Preview Content */,
@@ -80,6 +100,42 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		837038B12DC76031008B73E2 /* HomeFeature */ = {
+			isa = PBXGroup;
+			children = (
+				837038AF2DC76031008B73E2 /* HomeReducer.swift */,
+				837038B02DC76031008B73E2 /* HomeView.swift */,
+			);
+			path = HomeFeature;
+			sourceTree = "<group>";
+		};
+		837038B42DC76031008B73E2 /* ProfileFeature */ = {
+			isa = PBXGroup;
+			children = (
+				837038B22DC76031008B73E2 /* ProfileReducer.swift */,
+				837038B32DC76031008B73E2 /* ProfileView.swift */,
+			);
+			path = ProfileFeature;
+			sourceTree = "<group>";
+		};
+		837038B72DC76031008B73E2 /* RootFeature */ = {
+			isa = PBXGroup;
+			children = (
+				837038B52DC76031008B73E2 /* RootReducer.swift */,
+				837038B62DC76031008B73E2 /* RootView.swift */,
+			);
+			path = RootFeature;
+			sourceTree = "<group>";
+		};
+		837038BA2DC76031008B73E2 /* TabBarFeature */ = {
+			isa = PBXGroup;
+			children = (
+				837038B82DC76031008B73E2 /* CustomTabBar.swift */,
+				837038B92DC76031008B73E2 /* TabBarReducer.swift */,
+			);
+			path = TabBarFeature;
 			sourceTree = "<group>";
 		};
 		839C23FB2D9588C4000FBBE9 /* SearchRepositoriesFeatureTests */ = {
@@ -172,6 +228,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				837038BB2DC76031008B73E2 /* CustomTabBar.swift in Sources */,
+				837038BC2DC76031008B73E2 /* RootReducer.swift in Sources */,
+				837038BD2DC76031008B73E2 /* RootView.swift in Sources */,
+				837038BE2DC76031008B73E2 /* ProfileReducer.swift in Sources */,
+				837038BF2DC76031008B73E2 /* TabBarReducer.swift in Sources */,
+				837038C02DC76031008B73E2 /* HomeView.swift in Sources */,
+				837038C12DC76031008B73E2 /* HomeReducer.swift in Sources */,
+				837038C22DC76031008B73E2 /* ProfileView.swift in Sources */,
 				835A6E762D958F1E006A0601 /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -14,7 +14,7 @@ public enum Tab: Equatable {
 }
 
 @Reducer
-public struct TabBarFeature {
+public struct TabBarReducer {
     
     @ObservableState
     public struct State: Equatable, Hashable {
@@ -22,7 +22,6 @@ public struct TabBarFeature {
     }
     
     public enum Action: Equatable {
-        
         case didSelectTab(Tab)
         case delegate(Delegate)
         
