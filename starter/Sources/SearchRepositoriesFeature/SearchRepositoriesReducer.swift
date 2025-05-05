@@ -9,7 +9,7 @@ import GithubClient
 public struct SearchRepositoriesReducer: Reducer, Sendable {
     // MARK: - State
     @ObservableState
-    public struct State: Equatable { // ※Sendableに準拠するとエラー
+    public struct State: Equatable {
         var items = IdentifiedArrayOf<RepositoryItemReducer.State>()
         var query: String = ""
         var showFavoritesOnly = false
@@ -45,8 +45,8 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
     public enum Action: BindableAction {
         case binding(BindingAction<State>) // バインディング変更時のアクション
         case items(IdentifiedActionOf<RepositoryItemReducer>)
-        case itemAppeared(id: Int) // リストのアイテムが表示されたときのアクション
-        case itemTapped(item: Repository, liked: Bool) // リストのアイテムの押下時のアクション
+        case itemAppeared(id: Int)
+        case itemTapped(item: Repository, liked: Bool)
         case search // 検索押下時
         case searchReposResponse(Result<SearchReposResponse, Error>) // 受け取った検索結果を流す
         case path(StackActionOf<Path>) // 子画面からのイベントを受け取る窓口
