@@ -61,11 +61,21 @@ public struct SearchRepositoriesReducer: Reducer, Sendable {
     @Dependency(\.githubClient) var githubClient
 
     public var body: some ReducerOf<Self> {
-        BindingReducer()
+        BindingReducer() // 各プロパティの変更を自動的に処理してくれる
+            .onChange(of: \.query) { oldValue, newValue in
+                Reduce { state, action in
+                    print("古い値：\(oldValue), 新しい値：\(newValue)")
+                    return Effect.none // 副作用なし
+                }
+            }
+        
         Reduce { state, action in
             switch action {
+            case .binding(\State.query): // KeyPathでパターンマッチングも可能（※「case .binding」よりも先に書く）.onChangeでも良い
+                print("現在の入力値は：\(state.query)")
+                return .none
             case .binding:
-                return .none // BindingReducer()で自動で処理されるので特に何もしなくてOK
+                return .none // BindingReducer()で自動で処理されるので特に何もしなくて
             case .items:
                 return .none
             case .itemAppeared:
