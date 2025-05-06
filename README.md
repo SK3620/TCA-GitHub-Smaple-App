@@ -2,6 +2,8 @@
 
 iOSアーキテクチャ「TCA」の学習を目的としたサンプルアプリ
 
+**※諸事情により、今プロジェクトは移行しました▶︎(https://github.com/SK3620/TCA-Github-App#)**
+
 ## 📚 参考リンク
 
 - [TCAでGithubリポジトリ検索アプリを作ってみよう①](https://qiita.com/takehilo/items/814319d4666fef402a41)
